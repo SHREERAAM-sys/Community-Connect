@@ -123,3 +123,5 @@ nb-configuration.xml
 *.tar.gz
 *.rar
 
+.env
+
