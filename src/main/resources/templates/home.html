@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Home - Community Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Include Navbar Fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+
+            <!--        message for activity created successfully-->
+            <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <span th:text="${message}"></span>
+            </div>
+            <!-- Welcome Text -->
+                <h1 th:text="'Welcome to Community Connect, ' + (${session.user != null ? session.user.firstName + ' ' + session.user.lastName : 'Guest'})"></h1>
+            <p th:if="${session.user.role == T(com.shree.communityconnect.constants.Role).ROLE_ORGANIZER}">
+                As an organizer, you can <a th:href="@{/organizer/activity/create}">create activities</a>.
+            </p>
+            <p th:if="${session.user.role == T(com.shree.communityconnect.constants.Role).ROLE_PARTICIPANT}">
+                As a participant, you can:
+            </p>
+            <ul class="list-unstyled" th:if="${session.user.role == T(com.shree.communityconnect.constants.Role).ROLE_PARTICIPANT}">
+                <li><a th:href="@{/participant/activities}">View All Activities</a></li>
+                <li><a th:href="@{/participant/registered-activities}">View Activities You're Participating In</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var alert = document.querySelector(".alert");
+        if (alert) {
+            setTimeout(function() {
+                $(alert).alert('close'); // Use jQuery to close the alert
+            }, 3000); // Time before closing (3 seconds)
+        }
+    });
+</script>
+</body>
+</html>
