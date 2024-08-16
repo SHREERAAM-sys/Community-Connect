@@ -1,0 +1,39 @@
+<!-- navbar.html -->
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="/path/to/logo.png" alt="Community Connect" height="30">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+
+                <!-- Participant Role -->
+                <li class="nav-item" th:if="${session.user.role == T(com.shree.communityconnect.constants.Role).ROLE_PARTICIPANT}">
+                    <a class="nav-link" th:href="@{/participant/activities}">Activity</a>
+                </li>
+                <li class="nav-item" th:if="${session.user.role == T(com.shree.communityconnect.constants.Role).ROLE_PARTICIPANT}">
+                    <a class="nav-link" th:href="@{/participant/registered-activities}">My Registered Activities</a>
+                </li>
+
+                <!-- Organizer Role -->
+                <li class="nav-item" th:if="${session.user.role == T(com.shree.communityconnect.constants.Role).ROLE_ORGANIZER}">
+                    <a class="nav-link" th:href="@{/organizer/activity/create}">Create Activity</a>
+                </li>
+                <li class="nav-item" th:if="${session.user.role == T(com.shree.communityconnect.constants.Role).ROLE_ORGANIZER}">
+                    <a class="nav-link" th:href="@{/organizer/activities}">Posted Activities</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
