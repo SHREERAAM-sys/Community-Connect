@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registered Activities</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Include the navigation bar fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+    <h1>Registered Activities</h1>
+    <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${message}"></span>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}"></span>
+    </div>
+    <div th:replace="fragments/navigate-back :: navigate-back"></div>
+
+    <div class="row">
+        <div th:each="activity : ${activityBeanList}" class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${activity.name}">Activity Name</h5>
+                    <p class="card-text" th:text="${activity.description}">Activity Description</p>
+                    <p class="card-text"><small class="text-muted" th:text="${@thymeleafUtils.formatDate(activity.activityDate)}">Activity Date</small></p>
+
+                    <!-- Unregister button -->
+
+                    <form th:action="@{|/participant/activities/unregister/${activity.id}|}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Unregister</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var alert = document.querySelector(".alert");
+        if (alert) {
+            setTimeout(function() {
+                $(alert).alert('close'); // Use jQuery to close the alert
+            }, 3000); // Time before closing (3 seconds)
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Participants</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Include the navigation bar fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+    <h1>Participants</h1>
+    <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${message}"></span>
+    </div>
+
+    <!-- Display total number of registrations -->
+    <h2 class="mb-4">Total Number of Registrations: <span th:text="${#lists.size(participants)}"></span></h2>
+
+    <h2 class="mb-4">Registered participants</h2>
+
+    <div th:replace="fragments/navigate-back :: navigate-back"></div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th> <!-- Column for numbering -->
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email Address</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="participant, iterStat : ${participants}">
+            <td th:text="${iterStat.index + 1}">1</td> <!-- Row numbering -->
+            <td th:text="${participant.firstName}">First Name</td>
+            <td th:text="${participant.lastName}">Last Name</td>
+            <td th:text="${participant.email}">Email Address</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var alert = document.querySelector(".alert");
+        if (alert) {
+            setTimeout(function() {
+                $(alert).alert('close'); // Use jQuery to close the alert
+            }, 3000); // Time before closing (3 seconds)
+        }
+    });
+</script>
+</html>

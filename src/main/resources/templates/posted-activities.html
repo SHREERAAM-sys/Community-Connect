@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Posted Activities</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Include the navigation bar fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+    <!--        message for activity created successfully-->
+    <!-- Alert message -->
+    <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${message}"></span>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${error}"></span>
+    </div>
+    <h2 class="mb-4">Posted Activities</h2>
+    <div th:replace="fragments/navigate-back :: navigate-back"></div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Activity Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Total Capacity</th>
+            <th>Participants</th>
+            <th>Activity Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="activity : ${activityList}">
+            <td th:text="${activity.name}">Activity Name</td>
+            <td th:text="${activity.description}">Description</td>
+            <td th:text="${activity.category}">Category</td>
+            <td th:text="${activity.type}">Type</td>
+            <td th:text="${activity.totalCapacity}">Total Capacity</td>
+            <td th:text="${#lists.size(activity.participantUserIdList)}">Participants</td>
+            <td th:text="${@thymeleafUtils.formatDate(activity.activityDate)}">Activity Date</td>
+<!--            <td th:text="${activity.activityDate != null ? #dates.format(activity.activityDate, 'yyyy-MM-dd HH:mm') : 'N/A'}">Activity Date</td>-->
+
+            <td>
+                <a th:href="@{|activities/edit/${activity.id}|}" class="btn btn-primary btn-sm">Edit</a>
+                <a th:href="@{|activities/viewParticipants/${activity.id}|}" class="btn btn-info btn-sm">View Participants</a>
+                <a th:href="@{|activities/delete/${activity.id}|}" class="btn btn-danger btn-sm">Delete</a>
+
+<!--                <form th:action="@{|activities/viewParticipants/${activity.id}|}" method="get" style="display:inline;">-->
+<!--                    <button type="submit" class="btn btn-info btn-sm">View Participants</button>-->
+<!--                </form>-->
+<!--                <form th:action="@{|activities/delete/${activity.id}|}" method="get" style="display:inline;">-->
+<!--                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>-->
+<!--                </form>-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var alert = document.querySelector(".alert");
+        if (alert) {
+            setTimeout(function() {
+                $(alert).alert('close'); // Use jQuery to close the alert
+            }, 3000); // Time before closing (3 seconds)
+        }
+    });
+</script>
+</html>
